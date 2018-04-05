@@ -1,0 +1,34 @@
+import capos.*
+
+test "conocer valor base de lucha de Rolando" {
+
+	assert.equals(3, rolando.lucha())
+
+}
+
+test "conocer valor base de hechiceria de Rolando" {
+
+	assert.equals(1, rolando.hechiceria())
+}
+
+test "incrementar en 1 el valor base de lucha de Rolando" {
+	rolando.incLucha()
+	assert.equals(4, rolando.lucha())
+}
+
+test "incrementar en 1 el valor base de hechiceria de Rolando" {
+	rolando.incHechiceria()
+	assert.equals(2, rolando.hechiceria())
+}
+
+test "obtener varios artefactos" {
+	rolando.obtenerArtefacto(espadaDelDestino)
+	assert.equals(1, rolando.hechiceria())
+	assert.equals(6, rolando.lucha())	
+	rolando.obtenerArtefacto(collarDivino)
+	assert.equals(2, rolando.hechiceria())
+	assert.equals(7, rolando.lucha())	
+	rolando.obtenerArtefacto(libroDeHechizos)
+	assert.equals(4, rolando.hechiceria())
+	assert.equals(7, rolando.lucha())	
+}
