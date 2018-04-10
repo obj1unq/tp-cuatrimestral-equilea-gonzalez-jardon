@@ -32,3 +32,32 @@ test "obtener varios artefactos" {
 	assert.equals(4, rolando.hechiceria())
 	assert.equals(7, rolando.lucha())	
 }
+
+test "obtener cota de malla" {
+	rolando.obtenerArtefacto(armadura)    
+    armadura.obtenerRefuerzo(cotaDeMalla)
+    assert.equals(1, rolando.hechiceria())
+    assert.equals(4, rolando.lucha())                  
+}
+
+test "obtener armadura y bendicion" {  
+	rolando.obtenerArtefacto(armadura)
+    armadura.obtenerRefuerzo(bendicion)
+    assert.equals(4, armadura.hechiceria())
+    assert.equals(3, armadura.ptosLucha())             
+}
+
+test "obtener armadura y hechizo" {    
+    rolando.obtenerArtefacto(armadura)
+    armadura.obtenerRefuerzo(hechizo)   
+    assert.equals(3, rolando.hechiceria())
+	assert.equals(1, rolando.lucha())	         
+}
+
+test "mejor artefato de espejo fantastico" {
+	rolando.obtenerArtefacto(espejoFantastico)
+	espejoFantastico.refuerzosDisponibles(espadaDelDestino)
+	espejoFantastico.refuerzosDisponibles(libroDeHechizos)
+	espejoFantastico.refuerzosDisponibles(collarDivino)
+	assert.equals(espejoFantastico.mejorArtefacto(rolando), espadaDelDestino)
+	}
