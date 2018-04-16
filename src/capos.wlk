@@ -99,7 +99,6 @@ object bandoDelSur{
    	}
 	
 }
-
 object cofrecitoDeOro{
 	method efecto(){
 		bandoDelSur.incTesoro(100)
@@ -118,3 +117,4 @@ object viejoSabio{
 		rolando.incLucha()
 	}
 }
+//prueba
