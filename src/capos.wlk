@@ -9,8 +9,7 @@ object rolando {
 	
 	method obtenerArtefacto(_artefacto) {
 		artefactos.add(_artefacto)	
-		self.lucha(self.lucha()+_artefacto.ptosLucha())
-		self.hechiceriaBase(self.hechiceria())
+		self.lucha(self.lucha()+_artefacto.ptosLucha(self))
 		self.hechiceria(self.hechiceria()+_artefacto.ptosHechiceria(self))
 	}
 	
@@ -18,72 +17,104 @@ object rolando {
 		self.lucha(self.lucha()+1)	
 	}
 
-	method incHechiceria() {
-		self.hechiceriaBase(self.hechiceria())
+	method incHechiceria(){
+		self.hechiceriaBase(self.hechiceriaBase()+1)
 		self.hechiceria(self.hechiceria()+1)	
 	}
-}
- object armadura {
-    
-    var property ptosLucha = 3
-    var property hechiceria = 0
-    var property hechiceriaBase = 0
-    
-    method ptosHechiceria(capo) = 1 
-    
-    
-    method obtenerRefuerzo(_unRefuerzo) {
-        self.ptosLucha(self.ptosLucha()+ _unRefuerzo.ptosLucha())
-        self.hechiceriaBase(self.hechiceria())
-        self.hechiceria(self.hechiceria()+_unRefuerzo.ptosHechiceria(self))
-    }
-    
-    method esEspejoFantastico() {
-        return false
-    }
-    
+	
+	method mejorArtefacto() {
+		var artefactosSinEF=self.artefactos()
+		   artefactosSinEF.remove(espejoFantastico)
+		   return if(!artefactosSinEF.isEmpty()) artefactosSinEF.find({artefacto=>artefacto.ptosLucha(self)+artefacto.ptosHechiceria(self)==self.maximoArtefacto(artefactosSinEF)}) else artefactosSinEF
+	} 
+	                                   
+	
+	method encontrarElemento(_elemento){
+		_elemento.efecto()
+	}
+	
+	method maximoArtefacto(_artefactos) = _artefactos.map({artefacto=>artefacto.ptosLucha(self)+artefacto.ptosHechiceria(self)}).max() 
 }
 
-object cotaDeMalla {
-    const property ptosLucha = 1
-
-    method ptosHechiceria(armadura) = 0 
-    
+object espadaDelDestino{
+	method ptosLucha(capo) = 3
+	
+	method ptosHechiceria(capo) = 0
 }
 
-object bendicion {
-    const property ptosLucha = 1
-
-    method ptosHechiceria(armadura) = 2
-
+object libroDeHechizos{
+	method ptosLucha(capo) = 0
+	
+	method ptosHechiceria(capo) = capo.hechiceriaBase() 
 }
 
-object hechizo {
-    
-    const property ptosLucha = 0
-    
-    method ptosHechiceria(capo) { 
-        
-        return if (capo.hechiceriaBase() > 3) capo.ptosHechiceria() + 2 else capo.hechiceria() 
-     }
-
+object collarDivino{
+	method ptosLucha(capo)= 1
+	
+	method ptosHechiceria(capo)=1 
+}
+//parte 2 
+object armadura{
+	var property refuerzo=0
+	
+	method ptosLucha(capo) = if(refuerzo!=0)2 + refuerzo.ptosLucha(capo) else 2
+	
+	method ptosHechiceria(capo) = if (refuerzo!=0) refuerzo.ptosHechiceria(capo) else 0 
 }
 
-object espejoFantastico {
-    
-    var artefactos = #{}   
-     
-    method esEspejoFantastico() {
-        return true
-    }
-    
-    method refuerzosDisponibles(_unArtefacto) {
-        artefactos.add(_unArtefacto)
-    }
-
-    method mejorArtefacto(capo){
-        return capo.artefactos().filter({artefactoUsado => artefactoUsado.esEspejoFantastico()}).max({artefactoUsado => artefactoUsado.ptosHechiceria(capo) + artefactoUsado.ptosLucha()})
-               
-    }   
+object cotaDeMalla{
+	method ptosLucha(capo) = 1
+	method ptosHechiceria(capo) = 0 
 }
 
+object bendicion{
+	method ptosLucha(capo) = 0
+	method ptosHechiceria(capo) = 1
+}
+
+object hechizo{
+	method ptosLucha(capo) = 0
+	method ptosHechiceria(capo) = if(capo.hechiceriaBase()>3) 2 else 0 
+}
+
+
+object espejoFantastico{
+   method ptosLucha(capo) = if(capo.mejorArtefacto()!= #{})
+                              capo.mejorArtefacto().ptosLucha(capo) else 0
+   method ptosHechiceria(capo) =if(capo.mejorArtefacto()!= #{})
+                                 capo.mejorArtefacto().ptosHechiceria(capo) else 0   	
+}
+
+//parte3
+object bandoDelSur{
+   	var property tesoro=0
+   	var property reservaDeMateriales=0
+   	
+   	method incTesoro(valor){
+   		tesoro += valor
+   	}
+   	
+   	method incReservaDeMateriales(valor){
+   		reservaDeMateriales += valor
+   	}
+	
+}
+
+object cofrecitoDeOro{
+	method efecto(){
+		bandoDelSur.incTesoro(100)
+	}
+}
+
+object cumuloDeCarbon{
+	method efecto(){
+		bandoDelSur.incReservaDeMateriales(50)
+	}
+}
+
+object viejoSabio{
+	method efecto(){
+		rolando.incHechiceria()
+		rolando.incLucha()
+	}
+}

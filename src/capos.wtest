@@ -1,63 +1,83 @@
 import capos.*
 
-test "conocer valor base de lucha de Rolando" {
-
-	assert.equals(3, rolando.lucha())
-
-}
-
-test "conocer valor base de hechiceria de Rolando" {
-
-	assert.equals(1, rolando.hechiceria())
-}
-
-test "incrementar en 1 el valor base de lucha de Rolando" {
-	rolando.incLucha()
-	assert.equals(4, rolando.lucha())
-}
-
-test "incrementar en 1 el valor base de hechiceria de Rolando" {
+test " incrementa puntos de hechiceria"{
 	rolando.incHechiceria()
-	assert.equals(2, rolando.hechiceria())
+	assert.equals(2,rolando.hechiceria())
 }
 
-test "obtener varios artefactos" {
-	rolando.obtenerArtefacto(espadaDelDestino)
-	assert.equals(1, rolando.hechiceria())
-	assert.equals(6, rolando.lucha())	
+test "incrementa hechiceria y obtiene el collar divino"{
+	rolando.incHechiceria()
 	rolando.obtenerArtefacto(collarDivino)
-	assert.equals(2, rolando.hechiceria())
-	assert.equals(7, rolando.lucha())	
+	assert.equals(3,rolando.hechiceria())
+	assert.equals(2,rolando.hechiceriaBase())
+	assert.equals(4,rolando.lucha())
+}
+
+test "incrementa hechiceria y obtiene el collar divino,libroDeHechizos"{
+	rolando.incHechiceria()
+	rolando.obtenerArtefacto(collarDivino)
 	rolando.obtenerArtefacto(libroDeHechizos)
-	assert.equals(4, rolando.hechiceria())
-	assert.equals(7, rolando.lucha())	
+	assert.equals(4,rolando.lucha())
+	assert.equals(5,rolando.hechiceria())
+	assert.equals(2,rolando.hechiceriaBase())
 }
 
-test "obtener cota de malla" {
-	rolando.obtenerArtefacto(armadura)    
-    armadura.obtenerRefuerzo(cotaDeMalla)
-    assert.equals(1, rolando.hechiceria())
-    assert.equals(4, rolando.lucha())                  
+test "incrementa hechiceria y obtiene el collarDivino,libroDeHechizos y espadaDelDestino"{
+	rolando.incHechiceria()
+	rolando.obtenerArtefacto(collarDivino)
+	rolando.obtenerArtefacto(libroDeHechizos)
+	rolando.obtenerArtefacto(espadaDelDestino)
+	assert.equals(2,rolando.hechiceriaBase())
+	assert.equals(5,rolando.hechiceria())
+	assert.equals(7,rolando.lucha())
 }
 
-test "obtener armadura y bendicion" {  
+test "obtiene la armadura con refuerzo cota de malla"{
+	armadura.refuerzo(cotaDeMalla)
 	rolando.obtenerArtefacto(armadura)
-    armadura.obtenerRefuerzo(bendicion)
-    assert.equals(4, armadura.hechiceria())
-    assert.equals(3, armadura.ptosLucha())             
+	assert.equals(1,rolando.hechiceria())
+	assert.equals(6,rolando.lucha())
+    assert.equals(1,rolando.hechiceriaBase())
 }
 
-test "obtener armadura y hechizo" {    
-    rolando.obtenerArtefacto(armadura)
-    armadura.obtenerRefuerzo(hechizo)   
-    assert.equals(3, rolando.hechiceria())
-	assert.equals(1, rolando.lucha())	         
+test "obtiene la armadura sin refuerzo"{
+	rolando.obtenerArtefacto(armadura)
+	assert.equals(1,rolando.hechiceria())
+	assert.equals(5,rolando.lucha())
+	assert.equals(1,rolando.hechiceriaBase())
 }
 
-test "mejor artefato de espejo fantastico" {
+test "obtiene la armadura con refuerzo bendicion y el espejo fantastico"{
+	armadura.refuerzo(bendicion)
+	rolando.obtenerArtefacto(armadura)
+	assert.equals(2,rolando.hechiceria())
+	assert.equals(5,rolando.lucha())
+    assert.equals(1,rolando.hechiceriaBase())
+    rolando.obtenerArtefacto(espejoFantastico)
+    assert.equals(3,rolando.hechiceria())
+    assert.equals(7,rolando.lucha())
+    assert.equals(1,rolando.hechiceriaBase())
+}
+
+test"obtiene el espejo fantastico"{
 	rolando.obtenerArtefacto(espejoFantastico)
-	espejoFantastico.refuerzosDisponibles(espadaDelDestino)
-	espejoFantastico.refuerzosDisponibles(libroDeHechizos)
-	espejoFantastico.refuerzosDisponibles(collarDivino)
-	assert.equals(espejoFantastico.mejorArtefacto(rolando), espadaDelDestino)
-	}
+	assert.equals(1,rolando.hechiceria())
+	assert.equals(1,rolando.hechiceriaBase())
+	assert.equals(3,rolando.lucha())
+}
+
+test"rolando encuentra el cofrecito De Oro"{
+	rolando.encontrarElemento(cofrecitoDeOro)
+	assert.equals(100,bandoDelSur.tesoro())
+}
+
+test"rolando encuentra el cumulo de carbon"{
+	rolando.encontrarElemento(cumuloDeCarbon)
+	assert.equals(50,bandoDelSur.reservaDeMateriales())
+}
+
+test"rolando encuentra al viejo sabio"{
+	rolando.encontrarElemento(viejoSabio)
+	assert.equals(2,rolando.hechiceria())
+	assert.equals(4,rolando.lucha())
+}
