@@ -57,6 +57,14 @@ test "obtiene la armadura con refuerzo bendicion y el espejo fantastico"{
     assert.equals(3,rolando.hechiceria())
     assert.equals(7,rolando.lucha())
     assert.equals(1,rolando.hechiceriaBase())
+    
+    // TODO este test no funciona. Cambio el refuerzo de la armadura y no cambian los valores de hechiceria y lucha.
+    // Ahora la armadura entrega 3 puntos de lucha y 0 de hechicería.
+    // y por lo tanto el espejo entrega otros 3 de lucha y 0 de hechiceria.
+    armadura.refuerzo(cotaDeMalla)
+    assert.equals(1,rolando.hechiceria())
+    assert.equals(9,rolando.lucha())
+    assert.equals(1,rolando.hechiceriaBase())
 }
 
 test"obtiene el espejo fantastico"{
@@ -81,4 +89,5 @@ test"rolando encuentra al viejo sabio"{
 	assert.equals(2,rolando.hechiceria())
 	assert.equals(4,rolando.lucha())
 }
+/// Volar esto
 //prueba
