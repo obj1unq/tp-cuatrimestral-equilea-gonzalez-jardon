@@ -1,77 +1,68 @@
 import capos.*
 
 test " incrementa puntos de hechiceria"{
-	rolando.incHechiceria()
-	assert.equals(2,rolando.hechiceria())
+	rolando.incrementarHechiceria()
+	assert.equals(2,rolando.hechiceriaBase())
 }
 
 test "incrementa hechiceria y obtiene el collar divino"{
-	rolando.incHechiceria()
+	rolando.incrementarHechiceria()
 	rolando.obtenerArtefacto(collarDivino)
-	assert.equals(3,rolando.hechiceria())
-	assert.equals(2,rolando.hechiceriaBase())
-	assert.equals(4,rolando.lucha())
+	assert.equals(3,rolando.valorHechiceria())
+	assert.equals(4,rolando.valorLucha())
 }
 
 test "incrementa hechiceria y obtiene el collar divino,libroDeHechizos"{
-	rolando.incHechiceria()
+	rolando.incrementarHechiceria()
 	rolando.obtenerArtefacto(collarDivino)
 	rolando.obtenerArtefacto(libroDeHechizos)
-	assert.equals(4,rolando.lucha())
-	assert.equals(5,rolando.hechiceria())
-	assert.equals(2,rolando.hechiceriaBase())
+	assert.equals(4,rolando.valorLucha())
+	assert.equals(5,rolando.valorHechiceria())
 }
 
 test "incrementa hechiceria y obtiene el collarDivino,libroDeHechizos y espadaDelDestino"{
-	rolando.incHechiceria()
+	rolando.incrementarHechiceria()
 	rolando.obtenerArtefacto(collarDivino)
 	rolando.obtenerArtefacto(libroDeHechizos)
 	rolando.obtenerArtefacto(espadaDelDestino)
-	assert.equals(2,rolando.hechiceriaBase())
-	assert.equals(5,rolando.hechiceria())
-	assert.equals(7,rolando.lucha())
+	assert.equals(5,rolando.valorHechiceria())
+	assert.equals(7,rolando.valorLucha())
 }
 
 test "obtiene la armadura con refuerzo cota de malla"{
 	armadura.refuerzo(cotaDeMalla)
 	rolando.obtenerArtefacto(armadura)
-	assert.equals(1,rolando.hechiceria())
-	assert.equals(6,rolando.lucha())
-    assert.equals(1,rolando.hechiceriaBase())
+	assert.equals(1,rolando.valorHechiceria())
+	assert.equals(6,rolando.valorLucha())
 }
 
 test "obtiene la armadura sin refuerzo"{
 	rolando.obtenerArtefacto(armadura)
-	assert.equals(1,rolando.hechiceria())
-	assert.equals(5,rolando.lucha())
-	assert.equals(1,rolando.hechiceriaBase())
+	assert.equals(1,rolando.valorHechiceria())
+	assert.equals(5,rolando.valorLucha())
 }
 
 test "obtiene la armadura con refuerzo bendicion y el espejo fantastico"{
 	armadura.refuerzo(bendicion)
 	rolando.obtenerArtefacto(armadura)
-	assert.equals(2,rolando.hechiceria())
-	assert.equals(5,rolando.lucha())
-    assert.equals(1,rolando.hechiceriaBase())
+	assert.equals(2,rolando.valorHechiceria())
+	assert.equals(5,rolando.valorLucha())
     rolando.obtenerArtefacto(espejoFantastico)
-    assert.equals(3,rolando.hechiceria())
-    assert.equals(7,rolando.lucha())
-    assert.equals(1,rolando.hechiceriaBase())
-    
-    // TODO este test no funciona. Cambio el refuerzo de la armadura y no cambian los valores de hechiceria y lucha.
-    // Ahora la armadura entrega 3 puntos de lucha y 0 de hechicería.
-    // y por lo tanto el espejo entrega otros 3 de lucha y 0 de hechiceria.
+    assert.equals(3,rolando.valorHechiceria())
+    assert.equals(7,rolando.valorLucha())
     armadura.refuerzo(cotaDeMalla)
-    assert.equals(1,rolando.hechiceria())
-    assert.equals(9,rolando.lucha())
-    assert.equals(1,rolando.hechiceriaBase())
+    assert.equals(1,rolando.valorHechiceria())
+    assert.equals(9,rolando.valorLucha())
+    armadura.refuerzo(noRefuerzo)
+    assert.equals(1,rolando.valorHechiceria())
+    assert.equals(7,rolando.valorLucha())
+         
 }
 
 test"obtiene el espejo fantastico"{
 	rolando.obtenerArtefacto(espejoFantastico)
-	assert.equals(1,rolando.hechiceria())
-	assert.equals(1,rolando.hechiceriaBase())
-	assert.equals(3,rolando.lucha())
+	assert.equals(1,rolando.valorHechiceria())
+	assert.equals(3,rolando.luchaBase())
 }
 
 test"rolando encuentra el cofrecito De Oro"{
@@ -86,8 +77,6 @@ test"rolando encuentra el cumulo de carbon"{
 
 test"rolando encuentra al viejo sabio"{
 	rolando.encontrarElemento(viejoSabio)
-	assert.equals(2,rolando.hechiceria())
-	assert.equals(4,rolando.lucha())
+	assert.equals(2,rolando.valorHechiceria())
+	assert.equals(4,rolando.luchaBase())
 }
-/// Volar esto
-//prueba
