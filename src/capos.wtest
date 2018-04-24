@@ -80,3 +80,4 @@ test"rolando encuentra al viejo sabio"{
 	assert.equals(2,rolando.valorHechiceria())
 	assert.equals(4,rolando.luchaBase())
 }
+//
