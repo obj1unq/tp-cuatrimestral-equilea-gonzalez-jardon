@@ -1,9 +1,12 @@
+class Capo {
 
-object rolando {
-
-	var property luchaBase = 3
-	var property hechiceriaBase = 1
-	const artefactos = #{}
+	// si le pongo null a la variable "bando" no funcionan los test porque no reconoce la referencia del mismo
+	var property bando = 1
+	var property luchaBase = null
+	var property hechiceriaBase = null
+	var property artefactos = []
+	var puntoDeVida
+	
 
 	method artefactos() = artefactos
 
@@ -23,9 +26,65 @@ object rolando {
 		hechiceriaBase += 1
 	}
 
-	method encontrarElemento(_elemento) {
-		_elemento.efecto(self)
+
+	method darArtefactos(capo) {
+		artefactos.addAll(capo.artefactos())
+		capo.artefactos([])
 	}
+
+	method sumaDeValores(capo) {
+		return capo.valorHechiceria() + capo.valorLucha()
+	}
+
+	method peleaDeCapos(capo) {
+		if (self.sumaDeValores(capo) > self.sumaDeValores(self)) {
+			self.matarCapo()
+		} else capo.matarCapo()
+	}
+
+	method estaVivo() {
+		return puntoDeVida == 1
+	}
+
+	method matarCapo() {
+		puntoDeVida = 0
+	}
+
+	method encontrarCapo(capo) {
+		if (capo.bando() == bando) self.darArtefactos(capo) else self.peleaDeCapos(capo)
+	}
+
+	method encontrarAlgo(algo) {
+		algo.efecto(self)
+	}
+	
+	method efecto(capo) {
+		capo.encontrarCapo(self)
+	}
+	
+	
+
+}
+
+object imagenes {
+	
+	method caballeroRolando() = "caballeroRolando.png"
+	
+	method caballeroCaterina() = "caballeroCaterina.png"
+	
+	method caballeroArchibaldo() = "caballeroArchibaldo.png"
+	
+}
+
+object neblina {
+
+	var property cosasOcultas = []
+
+	method efecto(capo) {
+		cosasOcultas.forEach({cosaOculta => capo.encontrarAlgo(cosaOculta)})
+	}
+	
+	method imagenNeblina() = "neblina.png"
 
 }
 
@@ -35,6 +94,10 @@ object espadaDelDestino {
 
 	method puntosHechiceria(capo) = 0
 
+	method efecto(capo) {
+		capo.obtenerArtefacto(self)
+	}
+
 }
 
 object libroDeHechizos {
@@ -42,6 +105,10 @@ object libroDeHechizos {
 	method puntosLucha(capo) = 0
 
 	method puntosHechiceria(capo) = capo.hechiceriaBase()
+
+	method efecto(capo) {
+		capo.obtenerArtefacto(self)
+	}
 
 }
 
@@ -51,10 +118,14 @@ object collarDivino {
 
 	method puntosHechiceria(capo) = 1
 
+	method efecto(capo) {
+		capo.obtenerArtefacto(self)
+	}
+
 }
 
 //parte 2 
-object armadura {
+class Armadura {
 
 	var property refuerzo = noRefuerzo
 	var luchaBase = 2
@@ -63,7 +134,11 @@ object armadura {
 	method puntosLucha(capo) = luchaBase + refuerzo.puntosLucha(capo)
 
 	method puntosHechiceria(capo) = hechiceriaBase + refuerzo.puntosHechiceria(capo)
-	
+
+	method efecto(capo) {
+		capo.obtenerArtefacto(self)
+	}
+
 }
 
 object cotaDeMalla {
@@ -71,6 +146,9 @@ object cotaDeMalla {
 	method puntosLucha(capo) = 1
 
 	method puntosHechiceria(capo) = 0
+	
+	 method efecto(capo) {}	
+	
 
 }
 
@@ -79,6 +157,9 @@ object bendicion {
 	method puntosLucha(capo) = 0
 
 	method puntosHechiceria(capo) = 1
+	
+	method efecto(capo) {}	
+	
 
 }
 
@@ -88,17 +169,18 @@ object hechizo {
 
 	method puntosHechiceria(capo) = if (capo.hechiceriaBase() > 3) 2 else 0
 	
-	}
+	method efecto(capo) {}	
 	
 
+}
 
 object noRefuerzo {
-	
+
 	method puntosLucha(capo) = 0
 
 	method puntosHechiceria(capo) = 0
-}
 
+}
 
 object espejoFantastico {
 
@@ -118,6 +200,10 @@ object espejoFantastico {
 		}
 	}
 
+	method efecto(capo) {
+		capo.obtenerArtefacto(self)
+	}
+
 	method artefactosSinEspejoFantastico(capo) = capo.artefactos().filter({ artefacto => artefacto != self })
 
 	method mejorArtefacto(capo) = self.artefactosSinEspejoFantastico(capo).max({ artefacto => artefacto.puntosLucha(capo) + artefacto.puntosHechiceria(capo) })
@@ -125,7 +211,7 @@ object espejoFantastico {
 }
 
 //parte3
-object bandoDelSur {
+class Bando {
 
 	var property tesoro = 0
 	var property reservaDeMateriales = 0
@@ -140,27 +226,49 @@ object bandoDelSur {
 
 }
 
-object cofrecitoDeOro {
+class CofrecitoDeOro {
+
+	var property valor = 0
 
 	method efecto(capo) {
-		bandoDelSur.incrementarTesoro(100)
+		capo.bando().incrementarTesoro(valor)
+	}	
+
+}
+
+class CumuloDeCarbon {
+
+	const property valor = 50
+
+	method efecto(capo) {
+		capo.bando().incrementarReservaDeMateriales(valor)
 	}
 
 }
 
-object cumuloDeCarbon {
+class ViejoSabio {
+
+	var lucha = ayudanteDeSabio
+	var hechiceria = null
 
 	method efecto(capo) {
-		bandoDelSur.incrementarReservaDeMateriales(50)
+		capo.luchaBase(self.valorQueDaElViejoSabioDeLucha(capo))
+		capo.hechiceriaBase(self.valorQueDaElViejoSabioDeHechiceria(capo))
+	}
+
+	method valorQueDaElViejoSabioDeLucha(capo) {
+		return capo.luchaBase() + ayudanteDeSabio.lucha()
+	}
+
+	method valorQueDaElViejoSabioDeHechiceria(capo) {
+		return capo.hechiceriaBase() + hechiceria
 	}
 
 }
 
-object viejoSabio {
+object ayudanteDeSabio {
 
-	method efecto(capo) {
-		capo.incrementarHechiceria()
-		capo.incrementarLucha()
-	}
+	var property lucha = 1
 
 }
+

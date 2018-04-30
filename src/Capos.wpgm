@@ -1,0 +1,17 @@
+import capos.*
+
+program CaposGame {
+	
+//	CONFIG	
+	game.title("Pepita")
+	game.height(10)
+	game.width(10)
+	game.ground("pasto.png")
+
+//	VISUALES
+	game.addVisualIn(imagenes.caballeroArchibaldo(), game.at(1,5))	
+	
+	
+//	START
+	game.start()
+}

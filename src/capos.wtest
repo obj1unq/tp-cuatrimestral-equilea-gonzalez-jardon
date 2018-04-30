@@ -1,83 +1,71 @@
 import capos.*
 
-test " incrementa puntos de hechiceria"{
-	rolando.incrementarHechiceria()
-	assert.equals(2,rolando.hechiceriaBase())
-}
+describe "test de capos y recursos" {
+	
+	
+	var bandoDelSur = new Bando (tesoro = 100, reservaDeMateriales = 50)
+    var bandoDelNorte = new Bando (tesoro = 200, reservaDeMateriales = 200)
+	var  rolando = new Capo( bando = bandoDelSur, luchaBase = 1, hechiceriaBase = 3, artefactos = #{}, puntoDeVida = 1)
+	var  caterina = new Capo( bando = bandoDelSur, luchaBase = 2, hechiceriaBase = 1, artefactos = #{ espadaDelDestino }, puntoDeVida = 1)
+	var  archibaldo = new Capo(bando = bandoDelNorte, luchaBase = 3, hechiceriaBase = 3, artefactos = #{ collarDivino, espejoFantastico }, puntoDeVida = 1)
+    var armadura = new Armadura()
+    var armadura2 = new Armadura()
+    var viejoSabio = new ViejoSabio(hechiceria = 1)
 
-test "incrementa hechiceria y obtiene el collar divino"{
-	rolando.incrementarHechiceria()
-	rolando.obtenerArtefacto(collarDivino)
-	assert.equals(3,rolando.valorHechiceria())
-	assert.equals(4,rolando.valorLucha())
-}
 
-test "incrementa hechiceria y obtiene el collar divino,libroDeHechizos"{
-	rolando.incrementarHechiceria()
-	rolando.obtenerArtefacto(collarDivino)
-	rolando.obtenerArtefacto(libroDeHechizos)
-	assert.equals(4,rolando.valorLucha())
-	assert.equals(5,rolando.valorHechiceria())
-}
-
-test "incrementa hechiceria y obtiene el collarDivino,libroDeHechizos y espadaDelDestino"{
-	rolando.incrementarHechiceria()
-	rolando.obtenerArtefacto(collarDivino)
-	rolando.obtenerArtefacto(libroDeHechizos)
-	rolando.obtenerArtefacto(espadaDelDestino)
-	assert.equals(5,rolando.valorHechiceria())
-	assert.equals(7,rolando.valorLucha())
-}
-
-test "obtiene la armadura con refuerzo cota de malla"{
-	armadura.refuerzo(cotaDeMalla)
-	rolando.obtenerArtefacto(armadura)
-	assert.equals(1,rolando.valorHechiceria())
-	assert.equals(6,rolando.valorLucha())
-}
-
-test "obtiene la armadura sin refuerzo"{
-	rolando.obtenerArtefacto(armadura)
-	assert.equals(1,rolando.valorHechiceria())
-	assert.equals(5,rolando.valorLucha())
-}
-
-test "obtiene la armadura con refuerzo bendicion y el espejo fantastico"{
-	armadura.refuerzo(bendicion)
-	rolando.obtenerArtefacto(armadura)
-	assert.equals(2,rolando.valorHechiceria())
-	assert.equals(5,rolando.valorLucha())
-    rolando.obtenerArtefacto(espejoFantastico)
-    assert.equals(3,rolando.valorHechiceria())
-    assert.equals(7,rolando.valorLucha())
-    armadura.refuerzo(cotaDeMalla)
-    assert.equals(1,rolando.valorHechiceria())
-    assert.equals(9,rolando.valorLucha())
-    armadura.refuerzo(noRefuerzo)
-    assert.equals(1,rolando.valorHechiceria())
-    assert.equals(7,rolando.valorLucha())
-         
-}
-
-test"obtiene el espejo fantastico"{
-	rolando.obtenerArtefacto(espejoFantastico)
-	assert.equals(1,rolando.valorHechiceria())
-	assert.equals(3,rolando.luchaBase())
-}
-
-test"rolando encuentra el cofrecito De Oro"{
-	rolando.encontrarElemento(cofrecitoDeOro)
-	assert.equals(100,bandoDelSur.tesoro())
-}
-
-test"rolando encuentra el cumulo de carbon"{
-	rolando.encontrarElemento(cumuloDeCarbon)
-	assert.equals(50,bandoDelSur.reservaDeMateriales())
-}
-
-test"rolando encuentra al viejo sabio"{
-	rolando.encontrarElemento(viejoSabio)
-	assert.equals(2,rolando.valorHechiceria())
-	assert.equals(4,rolando.luchaBase())
-}
-//
+	test "rolando se encuentra a archibaldo" {
+		rolando.encontrarAlgo(archibaldo) 
+		assert.notThat(rolando.estaVivo())
+	}
+	
+	test "rolando se encuentra con caterina" {
+		rolando.encontrarAlgo(caterina)
+		assert.that(rolando.artefactos().size() == 1)
+		assert.that(rolando.valorHechiceria() == 3)
+		assert.that(rolando.valorLucha() == 4)
+		assert.that(caterina.artefactos().size() == 0)
+	}
+	
+	test "rolando se encuentra la armadura bendecida" {
+		rolando.encontrarAlgo(armadura)
+		armadura.refuerzo(bendicion)
+		assert.that(rolando.valorHechiceria() == 4)
+		assert.that(rolando.valorLucha() == 3)	
+	}
+	
+	test "rolando encuentra al viejo sabio" {
+		rolando.encontrarAlgo(viejoSabio)
+		assert.that(rolando.valorHechiceria() == 4)
+		assert.that(rolando.valorLucha() == 2)
+	}
+	
+	test "rolando se encuentra con el viejo sabio la armadura bendecida, caterina y archibaldo" {
+		rolando.encontrarAlgo(viejoSabio)
+		rolando.encontrarAlgo(armadura)
+		armadura.refuerzo(bendicion)
+		rolando.encontrarAlgo(caterina)
+		rolando.encontrarAlgo(archibaldo) 
+		assert.notThat(archibaldo.estaVivo())		
+	}
+	
+	test "rolando encuentra cosas "{
+		rolando.encontrarAlgo(armadura)
+		armadura.refuerzo(bendicion)
+		assert.that(rolando.valorHechiceria() == 4)
+		assert.that(rolando.valorLucha() == 3)	
+		rolando.encontrarAlgo(espejoFantastico)
+		assert.that(rolando.valorHechiceria() == 5)
+		assert.that(rolando.valorLucha() == 5)	
+				
+	}
+	
+	test "archibaldo encuentra una neblina" {
+		neblina.cosasOcultas([armadura, espadaDelDestino, libroDeHechizos])
+		archibaldo.encontrarAlgo(neblina)
+		assert.equals(archibaldo.valorHechiceria(),  10)
+		assert.equals(archibaldo.valorLucha(),  9)		
+	}
+	
+	
+	
+	}
