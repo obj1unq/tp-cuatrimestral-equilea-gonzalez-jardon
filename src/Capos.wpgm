@@ -41,7 +41,7 @@ program CaposGame {
 //	TECLADO
 
 
-  //no reconocia las referencias de las direcciones por eso utilizamos este codigo
+  //no reconocia las referencias de las direcciones por eso utilizamos este código
   game.origin().drawCharacter(rolando)
 
 

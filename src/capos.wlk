@@ -325,4 +325,4 @@ object ayudanteDeSabio {
 	var property lucha = 1
 
 }
-//
+

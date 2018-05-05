@@ -1,7 +1,7 @@
 import capos.*
 
 describe "test de capos y recursos" {
-	//
+	
 	
 	var bandoDelSur = new Bando (tesoro = 100, reservaDeMateriales = 50)
     var bandoDelNorte = new Bando (tesoro = 200, reservaDeMateriales = 200)
