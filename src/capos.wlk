@@ -1,3 +1,4 @@
+
 class Capo {
 
 	// si le pongo null a la variable "bando" no funcionan los test porque no reconoce la referencia del mismo
@@ -8,6 +9,8 @@ class Capo {
 	var puntoDeVida
 	var property posicion = game.at(2, 3)
 	var property imagen = null
+
+	method artefactos() = artefactos
 
 	method obtenerArtefacto(_artefacto) {
 		artefactos.add(_artefacto)
@@ -203,8 +206,7 @@ object noRefuerzo {
 	method puntosLucha(capo) = 0
 
 	method puntosHechiceria(capo) = 0
-    
-    method efecto(capo){}
+
 }
 
 object espejoFantastico {
@@ -255,8 +257,6 @@ class Bando {
 	method incrementarReservaDeMateriales(valor) {
 		reservaDeMateriales += valor
 	}
-	
-	method efecto(capo){}
 
 	method llego(capo) {
 	}
@@ -326,4 +326,3 @@ object ayudanteDeSabio {
 	var property lucha = 1
 
 }
-
