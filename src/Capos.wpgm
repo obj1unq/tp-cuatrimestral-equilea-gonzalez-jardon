@@ -1,15 +1,51 @@
 import capos.*
+	
+
+	
+
 
 program CaposGame {
 	
+	
+	var bandoDelSur = new Bando (tesoro = 100, reservaDeMateriales = 50)
+    var bandoDelNorte = new Bando (tesoro = 200, reservaDeMateriales = 200)
+	var  rolando = new Capo( bando = bandoDelSur, luchaBase = 1, hechiceriaBase = 3, artefactos = #{}, puntoDeVida = 1, imagen = "caballeroRolando.png", posicion = game.at(9,8))
+	var  caterina = new Capo( bando = bandoDelSur, luchaBase = 2, hechiceriaBase = 1, artefactos = #{ espadaDelDestino }, puntoDeVida = 1, imagen= "caballeroCaterina.png",posicion = game.at(7,10))
+	var  archibaldo = new Capo(bando = bandoDelNorte, luchaBase = 3, hechiceriaBase = 3, artefactos = #{ collarDivino, espejoFantastico }, puntoDeVida = 1, imagen = "caballeroArchibaldo.png", posicion = game.at(4,5))
+    var neblina = new Neblina (cosasOcultas = [ collarDivino, libroDeHechizos, espejoFantastico ])
+    var viejoSabio = new ViejoSabio()
+    var carbon=new CumuloDeCarbon()
+    var cofre= new CofrecitoDeOro()
+//    var armadura = new Armadura()
+//    var armadura2 = new Armadura()
+//    var viejoSabio = new ViejoSabio(hechiceria = 1)
+	
+
 //	CONFIG	
-	game.title("Pepita")
-	game.height(10)
-	game.width(10)
+	game.title("Capos")
+	game.height(15)
+	game.width(20)
 	game.ground("pasto.png")
 
 //	VISUALES
-	game.addVisualIn(imagenes.caballeroArchibaldo(), game.at(1,5))	
+	game.addVisualIn(archibaldo,archibaldo.posicion())
+	game.addVisualIn(caterina, caterina.posicion())
+	game.addVisualIn(neblina, neblina.posicion())
+	game.addVisualIn(espadaDelDestino, game.at(12,4))
+	game.addVisualIn(viejoSabio, game.at(14,4))
+    game.addVisualIn(carbon,game.at(5,5))
+    game.addVisualIn(cofre,game.at(5,6))	
+
+		
+	
+//	TECLADO
+
+  game.origin().drawCharacter(rolando)
+
+
+	game.whenCollideDo(rolando, {objetoEncontrado =>objetoEncontrado.llego(rolando)})		
+	
+	
 	
 	
 //	START
