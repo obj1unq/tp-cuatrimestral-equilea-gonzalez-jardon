@@ -6,7 +6,7 @@ import capos.*
 
 program CaposGame {
 	
-	
+//	
 	var bandoDelSur = new Bando (tesoro = 100, reservaDeMateriales = 50)
     var bandoDelNorte = new Bando (tesoro = 200, reservaDeMateriales = 200)
 	var  rolando = new Capo( bando = bandoDelSur, luchaBase = 1, hechiceriaBase = 3, artefactos = #{}, puntoDeVida = 1, imagen = "caballeroRolando.png", posicion = game.at(9,8))
