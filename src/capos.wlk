@@ -8,8 +8,6 @@ class Capo {
 	var puntoDeVida
 	
 
-	method artefactos() = artefactos
-
 	method obtenerArtefacto(_artefacto) {
 		artefactos.add(_artefacto)
 	}
@@ -179,7 +177,8 @@ object noRefuerzo {
 	method puntosLucha(capo) = 0
 
 	method puntosHechiceria(capo) = 0
-
+    
+    method efecto(capo){}
 }
 
 object espejoFantastico {
@@ -223,6 +222,8 @@ class Bando {
 	method incrementarReservaDeMateriales(valor) {
 		reservaDeMateriales += valor
 	}
+	
+	method efecto(capo){}
 
 }
 
