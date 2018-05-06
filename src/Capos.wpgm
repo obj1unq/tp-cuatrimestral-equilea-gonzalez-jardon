@@ -16,15 +16,15 @@ program CaposGame {
     var viejoSabio = new ViejoSabio()
     var carbon=new CumuloDeCarbon()
     var cofre= new CofrecitoDeOro()
-//    var armadura = new Armadura()
+    var armadura = new Armadura()
 //    var armadura2 = new Armadura()
 //    var viejoSabio = new ViejoSabio(hechiceria = 1)
 	
 
 //	CONFIG	
 	game.title("Capos")
-	game.height(15)
-	game.width(20)
+	game.height(14)
+	game.width(17)
 	game.ground("pasto.png")
 
 //	VISUALES
@@ -34,7 +34,11 @@ program CaposGame {
 	game.addVisualIn(espadaDelDestino, game.at(12,4))
 	game.addVisualIn(viejoSabio, game.at(14,4))
     game.addVisualIn(carbon,game.at(5,5))
-    game.addVisualIn(cofre,game.at(5,6))	
+    game.addVisualIn(cofre,game.at(5,6))		
+    game.addVisualIn(armadura, game.at(13,9))
+    game.addVisualIn(collarDivino,game.at(10,8))
+    game.addVisualIn(espejoFantastico,game.at(3,10))	
+ 	game.addVisualIn(libroDeHechizos,game.at(1,7))	
 
 		
 	
