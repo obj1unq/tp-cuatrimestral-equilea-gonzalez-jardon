@@ -9,6 +9,8 @@ program CaposGame {
 //	
 	var bandoDelSur = new Bando (tesoro = 100, reservaDeMateriales = 50)
     var bandoDelNorte = new Bando (tesoro = 200, reservaDeMateriales = 200)
+    //CORRECCION: Usar valores por default donde convenga, por ejemplo, la coleccion vacía de artefactos ya está como default en el capo. 
+	//CORRECCION: tambien se puede asumir que el capo nace vivo y no hace falta decirlo acá
 	var  rolando = new Capo( bando = bandoDelSur, luchaBase = 1, hechiceriaBase = 3, artefactos = #{}, puntoDeVida = 1, imagen = "caballeroRolando.png", posicion = game.at(9,8))
 	var  caterina = new Capo( bando = bandoDelSur, luchaBase = 2, hechiceriaBase = 1, artefactos = #{ espadaDelDestino }, puntoDeVida = 1, imagen= "caballeroCaterina.png",posicion = game.at(7,10))
 	var  archibaldo = new Capo(bando = bandoDelNorte, luchaBase = 3, hechiceriaBase = 3, artefactos = #{ collarDivino, espejoFantastico }, puntoDeVida = 1, imagen = "caballeroArchibaldo.png", posicion = game.at(4,5))
@@ -47,7 +49,8 @@ program CaposGame {
 
   //no reconocia las referencias de las direcciones por eso utilizamos este código
   game.origin().drawCharacter(rolando)
-
+//CORRECCION: este es el codigo para agregar un objeto que se maneja con las flechas del teclado
+//game.addVisualCharacter(rolando)
 
 	game.whenCollideDo(rolando, {objetoEncontrado =>objetoEncontrado.llego(rolando)})		
 	
